@@ -50,7 +50,7 @@ type LoginRequest struct {
 // @Success 201 {object} response.Response
 // @Failure 400 {object} response.Response
 // @Failure 409 {object} response.Response
-// @Router /api/v1/auth/register [post]
+// @Router /auth/register [post]
 func (h *AuthHandler) Register(c *fiber.Ctx) error {
 	var req RegisterRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -100,7 +100,8 @@ func (h *AuthHandler) Register(c *fiber.Ctx) error {
 	h.setAuthCookies(c, result.AccessToken, result.RefreshToken)
 
 	return response.Created(c, "User registered successfully", fiber.Map{
-		"user": result.User,
+		"access_token": result.AccessToken,
+		"user":         result.User,
 	})
 }
 
@@ -114,7 +115,7 @@ func (h *AuthHandler) Register(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
-// @Router /api/v1/auth/login [post]
+// @Router /auth/login [post]
 func (h *AuthHandler) Login(c *fiber.Ctx) error {
 	var req LoginRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -151,7 +152,8 @@ func (h *AuthHandler) Login(c *fiber.Ctx) error {
 	h.setAuthCookies(c, result.AccessToken, result.RefreshToken)
 
 	return response.Success(c, "Login successful", fiber.Map{
-		"user": result.User,
+		"access_token": result.AccessToken,
+		"user":         result.User,
 	})
 }
 
@@ -163,7 +165,7 @@ func (h *AuthHandler) Login(c *fiber.Ctx) error {
 // @Produce json
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
-// @Router /api/v1/auth/refresh [post]
+// @Router /auth/refresh [post]
 func (h *AuthHandler) RefreshToken(c *fiber.Ctx) error {
 	// Get refresh token from cookie
 	refreshToken := c.Cookies("refresh_token")
@@ -196,7 +198,8 @@ func (h *AuthHandler) RefreshToken(c *fiber.Ctx) error {
 	h.setAuthCookies(c, result.AccessToken, result.RefreshToken)
 
 	return response.Success(c, "Token refreshed successfully", fiber.Map{
-		"user": result.User,
+		"access_token": result.AccessToken,
+		"user":         result.User,
 	})
 }
 
@@ -207,7 +210,7 @@ func (h *AuthHandler) RefreshToken(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Success 200 {object} response.Response
-// @Router /api/v1/auth/logout [post]
+// @Router /auth/logout [post]
 func (h *AuthHandler) Logout(c *fiber.Ctx) error {
 	// Get refresh token from cookie
 	refreshToken := c.Cookies("refresh_token")
@@ -231,7 +234,7 @@ func (h *AuthHandler) Logout(c *fiber.Ctx) error {
 // @Security BearerAuth
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
-// @Router /api/v1/auth/logout-all [post]
+// @Router /auth/logout-all [post]
 func (h *AuthHandler) LogoutAll(c *fiber.Ctx) error {
 	// Get user ID from context (set by auth middleware)
 	userID, ok := c.Locals("userID").(uint)
@@ -259,7 +262,7 @@ func (h *AuthHandler) LogoutAll(c *fiber.Ctx) error {
 // @Security BearerAuth
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
-// @Router /api/v1/auth/me [get]
+// @Router /auth/me [get]
 func (h *AuthHandler) Me(c *fiber.Ctx) error {
 	// Get user ID from context (set by auth middleware)
 	userID, ok := c.Locals("userID").(uint)
