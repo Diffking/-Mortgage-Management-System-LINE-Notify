@@ -330,6 +330,98 @@ paths:
       summary: Register new user
       tags:
       - Auth
+  /dashboard:
+    get:
+      consumes:
+      - application/json
+      description: Get dashboard based on current user's role (auto-detect)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: My Dashboard
+      tags:
+      - Dashboard
+  /dashboard/admin:
+    get:
+      consumes:
+      - application/json
+      description: Get admin dashboard with system overview (Admin only)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: Admin Dashboard
+      tags:
+      - Dashboard
+  /dashboard/officer:
+    get:
+      consumes:
+      - application/json
+      description: Get officer dashboard with assigned cases and tasks (Officer only)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: Officer Dashboard
+      tags:
+      - Dashboard
+  /dashboard/user:
+    get:
+      consumes:
+      - application/json
+      description: Get user dashboard with mortgage status and appointments
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: User Dashboard
+      tags:
+      - Dashboard
   /health:
     get:
       consumes:

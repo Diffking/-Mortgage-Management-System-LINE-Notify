@@ -53,6 +53,9 @@ func Setup(app *fiber.App, db *gorm.DB, cfg *config.Config) {
 		notifyService,
 	)
 
+	// Phase 5: Dashboard service
+	dashboardService := services.NewDashboardService(db)
+
 	// Initialize handlers
 	healthHandler := handlers.NewHealthHandler()
 	authHandler := handlers.NewAuthHandler(authService, cfg)
@@ -61,6 +64,9 @@ func Setup(app *fiber.App, db *gorm.DB, cfg *config.Config) {
 	// Phase 4: Handlers
 	mortgageHandler := handlers.NewMortgageHandler(mortgageService)
 	masterHandler := handlers.NewMasterHandler(loanTypeRepo, loanStepRepo, loanDocRepo, loanApptRepo)
+
+	// Phase 5: Dashboard handler
+	dashboardHandler := handlers.NewDashboardHandler(dashboardService)
 
 	// Health check & root routes
 	app.Get("/", healthHandler.Root)
@@ -71,7 +77,7 @@ func Setup(app *fiber.App, db *gorm.DB, cfg *config.Config) {
 
 	// API v1 group
 	apiV1 := app.Group("/api/v1")
-	setupAPIV1Routes(apiV1, healthHandler, authHandler, userHandler, mortgageHandler, masterHandler, cfg)
+	setupAPIV1Routes(apiV1, healthHandler, authHandler, userHandler, mortgageHandler, masterHandler, dashboardHandler, cfg)
 }
 
 // setupAPIV1Routes configures API v1 routes
@@ -82,6 +88,7 @@ func setupAPIV1Routes(
 	userHandler *handlers.UserHandler,
 	mortgageHandler *handlers.MortgageHandler,
 	masterHandler *handlers.MasterHandler,
+	dashboardHandler *handlers.DashboardHandler,
 	cfg *config.Config,
 ) {
 	// API Info
@@ -112,6 +119,11 @@ func setupAPIV1Routes(
 	masterRoutes.Use(middleware.AuthMiddleware(cfg))
 	masterRoutes.Use(middleware.AdminOnly())
 	setupMasterRoutes(masterRoutes, masterHandler)
+
+	// Phase 5: Dashboard routes
+	dashboardRoutes := router.Group("/dashboard")
+	dashboardRoutes.Use(middleware.AuthMiddleware(cfg))
+	setupDashboardRoutes(dashboardRoutes, dashboardHandler)
 }
 
 // setupAuthRoutes configures authentication routes
@@ -200,4 +212,19 @@ func setupMasterRoutes(router fiber.Router, handler *handlers.MasterHandler) {
 	router.Post("/loan-appts", handler.CreateLoanAppt)
 	router.Put("/loan-appts/:id", handler.UpdateLoanAppt)
 	router.Delete("/loan-appts/:id", handler.DeleteLoanAppt)
+}
+
+// setupDashboardRoutes configures dashboard routes (Phase 5)
+func setupDashboardRoutes(router fiber.Router, handler *handlers.DashboardHandler) {
+	// Auto-detect role dashboard (All authenticated users)
+	router.Get("/", handler.GetMyDashboard)
+
+	// User dashboard (All authenticated users)
+	router.Get("/user", handler.GetUserDashboard)
+
+	// Officer dashboard (Officer/Admin only)
+	router.Get("/officer", middleware.OfficerOrAdmin(), handler.GetOfficerDashboard)
+
+	// Admin dashboard (Admin only)
+	router.Get("/admin", middleware.AdminOnly(), handler.GetAdminDashboard)
 }
