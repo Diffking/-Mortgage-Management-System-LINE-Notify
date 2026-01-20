@@ -57,7 +57,7 @@ type CreateMortgageRequest struct {
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
-// @Router /api/v1/mortgages [post]
+// @Router /mortgages [post]
 func (h *MortgageHandler) Create(c *fiber.Ctx) error {
 	var req CreateMortgageRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -119,7 +119,7 @@ func (h *MortgageHandler) Create(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
-// @Router /api/v1/mortgages [get]
+// @Router /mortgages [get]
 func (h *MortgageHandler) List(c *fiber.Ctx) error {
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	limit, _ := strconv.Atoi(c.Query("limit", "10"))
@@ -161,7 +161,7 @@ func (h *MortgageHandler) List(c *fiber.Ctx) error {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id} [get]
+// @Router /mortgages/{id} [get]
 func (h *MortgageHandler) GetByID(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -190,7 +190,7 @@ func (h *MortgageHandler) GetByID(c *fiber.Ctx) error {
 // @Security BearerAuth
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
-// @Router /api/v1/mortgages/my [get]
+// @Router /mortgages/my [get]
 func (h *MortgageHandler) GetMyMortgages(c *fiber.Ctx) error {
 	membNo, ok := c.Locals("membNo").(string)
 	if !ok || membNo == "" {
@@ -235,7 +235,7 @@ type ChangeStepRequest struct {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/step [put]
+// @Router /mortgages/{id}/step [put]
 func (h *MortgageHandler) ChangeStep(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -296,7 +296,7 @@ type ApproveRequest struct {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/approve [put]
+// @Router /mortgages/{id}/approve [put]
 func (h *MortgageHandler) Approve(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -356,7 +356,7 @@ type RejectRequest struct {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/reject [put]
+// @Router /mortgages/{id}/reject [put]
 func (h *MortgageHandler) Reject(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -403,7 +403,7 @@ func (h *MortgageHandler) Reject(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/history [get]
+// @Router /mortgages/{id}/history [get]
 func (h *MortgageHandler) GetHistory(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -434,7 +434,7 @@ func (h *MortgageHandler) GetHistory(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/docs [get]
+// @Router /mortgages/{id}/docs [get]
 func (h *MortgageHandler) GetDocs(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -472,7 +472,7 @@ type UpdateDocRequest struct {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/docs [put]
+// @Router /mortgages/{id}/docs [put]
 func (h *MortgageHandler) UpdateDoc(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -531,7 +531,7 @@ type CreateApptRequest struct {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/appts [post]
+// @Router /mortgages/{id}/appts [post]
 func (h *MortgageHandler) CreateAppt(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -589,7 +589,7 @@ func (h *MortgageHandler) CreateAppt(c *fiber.Ctx) error {
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/appts [get]
+// @Router /mortgages/{id}/appts [get]
 func (h *MortgageHandler) GetAppts(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -619,7 +619,7 @@ func (h *MortgageHandler) GetAppts(c *fiber.Ctx) error {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/appts/{appt_id}/complete [put]
+// @Router /mortgages/{id}/appts/{appt_id}/complete [put]
 func (h *MortgageHandler) CompleteAppt(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -665,7 +665,7 @@ type ChangeOfficerRequest struct {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/mortgages/{id}/officer [put]
+// @Router /mortgages/{id}/officer [put]
 func (h *MortgageHandler) ChangeOfficer(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {

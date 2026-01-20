@@ -38,6 +38,17 @@ func NewMasterHandler(
 // ============================================================
 
 // ListLoanTypes lists all loan types
+// @Summary List loan types
+// @Description Get all loan types (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param all query bool false "Include inactive"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-types [get]
 func (h *MasterHandler) ListLoanTypes(c *fiber.Ctx) error {
 	includeInactive := c.Query("all") == "true"
 
@@ -60,6 +71,18 @@ func (h *MasterHandler) ListLoanTypes(c *fiber.Ctx) error {
 }
 
 // GetLoanType gets a loan type by ID
+// @Summary Get loan type
+// @Description Get a loan type by ID (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Type ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-types/{id} [get]
 func (h *MasterHandler) GetLoanType(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -85,6 +108,18 @@ type CreateLoanTypeRequest struct {
 }
 
 // CreateLoanType creates a new loan type
+// @Summary Create loan type
+// @Description Create a new loan type (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param body body CreateLoanTypeRequest true "Loan type data"
+// @Success 201 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-types [post]
 func (h *MasterHandler) CreateLoanType(c *fiber.Ctx) error {
 	var req CreateLoanTypeRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -113,6 +148,20 @@ func (h *MasterHandler) CreateLoanType(c *fiber.Ctx) error {
 }
 
 // UpdateLoanType updates a loan type
+// @Summary Update loan type
+// @Description Update a loan type (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Type ID"
+// @Param body body CreateLoanTypeRequest true "Loan type data"
+// @Success 200 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-types/{id} [put]
 func (h *MasterHandler) UpdateLoanType(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -152,6 +201,18 @@ func (h *MasterHandler) UpdateLoanType(c *fiber.Ctx) error {
 }
 
 // DeleteLoanType deletes a loan type
+// @Summary Delete loan type
+// @Description Delete a loan type (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Type ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-types/{id} [delete]
 func (h *MasterHandler) DeleteLoanType(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -170,6 +231,17 @@ func (h *MasterHandler) DeleteLoanType(c *fiber.Ctx) error {
 // ============================================================
 
 // ListLoanSteps lists all loan steps
+// @Summary List loan steps
+// @Description Get all loan steps (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param all query bool false "Include inactive"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-steps [get]
 func (h *MasterHandler) ListLoanSteps(c *fiber.Ctx) error {
 	includeInactive := c.Query("all") == "true"
 
@@ -192,6 +264,18 @@ func (h *MasterHandler) ListLoanSteps(c *fiber.Ctx) error {
 }
 
 // GetLoanStep gets a loan step by ID
+// @Summary Get loan step
+// @Description Get a loan step by ID (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Step ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-steps/{id} [get]
 func (h *MasterHandler) GetLoanStep(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -219,6 +303,18 @@ type CreateLoanStepRequest struct {
 }
 
 // CreateLoanStep creates a new loan step
+// @Summary Create loan step
+// @Description Create a new loan step (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param body body CreateLoanStepRequest true "Loan step data"
+// @Success 201 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-steps [post]
 func (h *MasterHandler) CreateLoanStep(c *fiber.Ctx) error {
 	var req CreateLoanStepRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -249,6 +345,20 @@ func (h *MasterHandler) CreateLoanStep(c *fiber.Ctx) error {
 }
 
 // UpdateLoanStep updates a loan step
+// @Summary Update loan step
+// @Description Update a loan step (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Step ID"
+// @Param body body CreateLoanStepRequest true "Loan step data"
+// @Success 200 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-steps/{id} [put]
 func (h *MasterHandler) UpdateLoanStep(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -292,6 +402,18 @@ func (h *MasterHandler) UpdateLoanStep(c *fiber.Ctx) error {
 }
 
 // DeleteLoanStep deletes a loan step
+// @Summary Delete loan step
+// @Description Delete a loan step (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Step ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-steps/{id} [delete]
 func (h *MasterHandler) DeleteLoanStep(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -310,6 +432,17 @@ func (h *MasterHandler) DeleteLoanStep(c *fiber.Ctx) error {
 // ============================================================
 
 // ListLoanDocs lists all loan docs
+// @Summary List loan docs
+// @Description Get all loan documents (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param all query bool false "Include inactive"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-docs [get]
 func (h *MasterHandler) ListLoanDocs(c *fiber.Ctx) error {
 	includeInactive := c.Query("all") == "true"
 
@@ -332,6 +465,18 @@ func (h *MasterHandler) ListLoanDocs(c *fiber.Ctx) error {
 }
 
 // GetLoanDoc gets a loan doc by ID
+// @Summary Get loan doc
+// @Description Get a loan document by ID (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Doc ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-docs/{id} [get]
 func (h *MasterHandler) GetLoanDoc(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -356,6 +501,18 @@ type CreateLoanDocRequest struct {
 }
 
 // CreateLoanDoc creates a new loan doc
+// @Summary Create loan doc
+// @Description Create a new loan document (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param body body CreateLoanDocRequest true "Loan doc data"
+// @Success 201 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-docs [post]
 func (h *MasterHandler) CreateLoanDoc(c *fiber.Ctx) error {
 	var req CreateLoanDocRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -383,6 +540,20 @@ func (h *MasterHandler) CreateLoanDoc(c *fiber.Ctx) error {
 }
 
 // UpdateLoanDoc updates a loan doc
+// @Summary Update loan doc
+// @Description Update a loan document (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Doc ID"
+// @Param body body CreateLoanDocRequest true "Loan doc data"
+// @Success 200 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-docs/{id} [put]
 func (h *MasterHandler) UpdateLoanDoc(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -419,6 +590,18 @@ func (h *MasterHandler) UpdateLoanDoc(c *fiber.Ctx) error {
 }
 
 // DeleteLoanDoc deletes a loan doc
+// @Summary Delete loan doc
+// @Description Delete a loan document (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Doc ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-docs/{id} [delete]
 func (h *MasterHandler) DeleteLoanDoc(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -437,6 +620,17 @@ func (h *MasterHandler) DeleteLoanDoc(c *fiber.Ctx) error {
 // ============================================================
 
 // ListLoanAppts lists all loan appts
+// @Summary List loan appointments
+// @Description Get all loan appointment types (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param all query bool false "Include inactive"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-appts [get]
 func (h *MasterHandler) ListLoanAppts(c *fiber.Ctx) error {
 	includeInactive := c.Query("all") == "true"
 
@@ -459,6 +653,18 @@ func (h *MasterHandler) ListLoanAppts(c *fiber.Ctx) error {
 }
 
 // GetLoanAppt gets a loan appt by ID
+// @Summary Get loan appointment
+// @Description Get a loan appointment type by ID (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Appt ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-appts/{id} [get]
 func (h *MasterHandler) GetLoanAppt(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -484,6 +690,18 @@ type CreateLoanApptRequest struct {
 }
 
 // CreateLoanAppt creates a new loan appt
+// @Summary Create loan appointment
+// @Description Create a new loan appointment type (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param body body CreateLoanApptRequest true "Loan appt data"
+// @Success 201 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Router /master/loan-appts [post]
 func (h *MasterHandler) CreateLoanAppt(c *fiber.Ctx) error {
 	var req CreateLoanApptRequest
 	if err := c.BodyParser(&req); err != nil {
@@ -512,6 +730,20 @@ func (h *MasterHandler) CreateLoanAppt(c *fiber.Ctx) error {
 }
 
 // UpdateLoanAppt updates a loan appt
+// @Summary Update loan appointment
+// @Description Update a loan appointment type (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Appt ID"
+// @Param body body CreateLoanApptRequest true "Loan appt data"
+// @Success 200 {object} response.Response
+// @Failure 400 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-appts/{id} [put]
 func (h *MasterHandler) UpdateLoanAppt(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -551,6 +783,18 @@ func (h *MasterHandler) UpdateLoanAppt(c *fiber.Ctx) error {
 }
 
 // DeleteLoanAppt deletes a loan appt
+// @Summary Delete loan appointment
+// @Description Delete a loan appointment type (Admin only)
+// @Tags Master
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Loan Appt ID"
+// @Success 200 {object} response.Response
+// @Failure 401 {object} response.Response
+// @Failure 403 {object} response.Response
+// @Failure 404 {object} response.Response
+// @Router /master/loan-appts/{id} [delete]
 func (h *MasterHandler) DeleteLoanAppt(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {

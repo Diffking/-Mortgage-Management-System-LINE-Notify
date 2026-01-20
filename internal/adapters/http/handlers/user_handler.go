@@ -34,7 +34,7 @@ func NewUserHandler(userService *services.UserService) *UserHandler {
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
-// @Router /api/v1/users [get]
+// @Router /users [get]
 func (h *UserHandler) ListUsers(c *fiber.Ctx) error {
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	limit, _ := strconv.Atoi(c.Query("limit", "10"))
@@ -64,7 +64,7 @@ func (h *UserHandler) ListUsers(c *fiber.Ctx) error {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/users/{id} [get]
+// @Router /users/{id} [get]
 func (h *UserHandler) GetUser(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -105,7 +105,7 @@ type UpdateUserRequest struct {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/users/{id} [put]
+// @Router /users/{id} [put]
 func (h *UserHandler) UpdateUser(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -158,7 +158,7 @@ func (h *UserHandler) UpdateUser(c *fiber.Ctx) error {
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
-// @Router /api/v1/users/{id} [delete]
+// @Router /users/{id} [delete]
 func (h *UserHandler) DeleteUser(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {
@@ -192,7 +192,7 @@ func (h *UserHandler) DeleteUser(c *fiber.Ctx) error {
 // @Security BearerAuth
 // @Success 200 {object} response.Response
 // @Failure 401 {object} response.Response
-// @Router /api/v1/profile [get]
+// @Router /profile [get]
 func (h *UserHandler) GetProfile(c *fiber.Ctx) error {
 	userID, ok := c.Locals("userID").(uint)
 	if !ok {
@@ -226,7 +226,7 @@ type UpdateProfileRequest struct {
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 409 {object} response.Response
-// @Router /api/v1/profile [put]
+// @Router /profile [put]
 func (h *UserHandler) UpdateProfile(c *fiber.Ctx) error {
 	userID, ok := c.Locals("userID").(uint)
 	if !ok {
@@ -272,7 +272,7 @@ type ChangePasswordRequest struct {
 // @Success 200 {object} response.Response
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
-// @Router /api/v1/profile/password [put]
+// @Router /profile/password [put]
 func (h *UserHandler) ChangePassword(c *fiber.Ctx) error {
 	userID, ok := c.Locals("userID").(uint)
 	if !ok {
@@ -329,7 +329,7 @@ type SetUserRoleRequest struct {
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 403 {object} response.Response
-// @Router /api/v1/users/{id}/role [put]
+// @Router /users/{id}/role [put]
 func (h *UserHandler) SetUserRole(c *fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 32)
 	if err != nil {

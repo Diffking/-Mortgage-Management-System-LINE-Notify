@@ -63,7 +63,7 @@ func (h *HealthHandler) HealthCheck(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router /api/v1 [get]
+
 func (h *HealthHandler) APIInfo(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "SPSC loanEasy API v1.0",
