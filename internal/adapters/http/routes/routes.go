@@ -128,9 +128,9 @@ func setupAPIV1Routes(
 
 // setupAuthRoutes configures authentication routes
 func setupAuthRoutes(router fiber.Router, handler *handlers.AuthHandler, cfg *config.Config) {
-	// Public routes
-	router.Post("/register", handler.Register)
-	router.Post("/login", handler.Login)
+	// Public routes with Auth Rate Limiter (5 requests/min)
+	router.Post("/register", middleware.AuthRateLimiter(), handler.Register)
+	router.Post("/login", middleware.AuthRateLimiter(), handler.Login)
 	router.Post("/refresh", handler.RefreshToken)
 	router.Post("/logout", handler.Logout)
 
@@ -152,7 +152,7 @@ func setupUserRoutes(router fiber.Router, handler *handlers.UserHandler) {
 func setupProfileRoutes(router fiber.Router, handler *handlers.UserHandler) {
 	router.Get("/", handler.GetProfile)
 	router.Put("/", handler.UpdateProfile)
-	router.Put("/password", handler.ChangePassword)
+	router.Put("/password", middleware.StrictRateLimiter(), handler.ChangePassword)
 }
 
 // setupMortgageRoutes configures mortgage routes (Phase 4)

@@ -142,3 +142,16 @@ func (c *Config) IsDev() bool {
 func (c *Config) IsProd() bool {
 	return c.AppMode == "prod"
 }
+
+// GetAllowedOrigins returns allowed origins for CORS
+func (c *Config) GetAllowedOrigins() string {
+	origins := getEnv("ALLOWED_ORIGINS", "")
+	if origins == "" {
+		if c.IsDev() {
+			return "*"
+		}
+		// Default production origins
+		return "https://loaneasy.spsc.or.th"
+	}
+	return origins
+}
